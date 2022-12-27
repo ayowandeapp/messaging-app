@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Events\UserRegistered;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -63,10 +66,23 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $token = mt_rand().time(); 
         return User::create([
+            'verify_token' => $token,
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        $user = $this->create($request->all());
+
+        //send notification
+        event(new UserRegistered($user));
+        return $this->registered($request, $user)
+                        ?: redirect($this->redirectPath());
     }
 }
