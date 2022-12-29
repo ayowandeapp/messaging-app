@@ -8,6 +8,12 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+window.VueRouter = require('vue-router').default;
+
+window.Axios = require('axios').default;
+
+import {store} from './store';
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -27,6 +33,40 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
+const Dashboard = Vue.component('chat-page', require('./components/pages/Dashboard.vue').default);
+
+const ChatPage = Vue.component('chat-page', require('./components/pages/ChatPage.vue').default);
+
+const routes =[
+    {path:'/',component:Dashboard, name:'Dashboard'},
+    {path:'/page/chat',component:ChatPage, name:'ChatPage'},
+    ];
+const router = new VueRouter({
+    routes:routes,
 });
+
+//register modules
+Vue.use(VueRouter,axios);
+new Vue(
+    Vue.util.extend(
+        { mode:'history', router, store }
+        )
+    ).$mount('#app')
+
+    
+// new Vue({
+//     el: '#app',
+//     mode:'history', 
+//     router, 
+//     store,
+//     created(){
+//         axios.get('/authUser').then(response=>{
+//             console.log(response);
+//             if(response.status === 200){
+//                 commit('setUserList',response.data);
+//                 return response.data;
+//             }
+//         })
+//     }
+
+//     });

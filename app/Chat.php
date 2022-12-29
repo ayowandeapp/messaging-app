@@ -8,7 +8,8 @@ use App\User;
 class Chat extends Model
 {
     protected $fillable = [
-        'sender_id', 'receiver_id','read','chat'];
+        'sender_id', 'receiver_id','read','chat'
+    ];
     protected $appends=['sender', 'receiver'];
 
     //protected attribute
