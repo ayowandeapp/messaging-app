@@ -1938,7 +1938,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     var that = this;
-    // this.pusher = new Pusher('051efabfe6e28ffcffaf',{
+    // this.pusher = new Pusher('05ffcffaf',{
     // 	cluster: 'mt1'
     // })
     // this.channel = this.pusher.subscribe('chats');
@@ -1961,9 +1961,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   })),
   data: function data() {
     return {
-      sendchat: '',
-      pusher: '',
-      channel: ''
+      sendchat: ''
     };
   },
   methods: {
@@ -1982,11 +1980,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     incomingChat: function incomingChat(chatMessage) {
       if (this.currentChatUser.id === chatMessage.chat.sender_id) {
-        //console.log('chatMessage', chatMessage);
-        this.$store.dispatch('newIncomingChat', chatMessage).then(function (res) {
-          var element = document.getElementById('chat');
-          element.scrollIntoView(false);
-        });
+        if (chatMessage.chat.receiver.id) {
+          //console.log('chatMessage', chatMessage);
+          this.$store.dispatch('newIncomingChat', chatMessage).then(function (res) {
+            var element = document.getElementById('chat');
+            element.scrollIntoView(false);
+          });
+        }
       }
     }
   }

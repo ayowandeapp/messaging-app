@@ -23,7 +23,7 @@
 		created(){
 
 			let that = this;
-			// this.pusher = new Pusher('051efabfe6e28ffcffaf',{
+			// this.pusher = new Pusher('05ffcffaf',{
 			// 	cluster: 'mt1'
 			// })
 			// this.channel = this.pusher.subscribe('chats');
@@ -48,8 +48,6 @@
 		data(){
 			return {
 				sendchat:'',
-				pusher:'',
-				channel:''
 			}
 		},
 		methods:{
@@ -69,11 +67,13 @@
 			},
 			incomingChat(chatMessage){
 				if(this.currentChatUser.id === chatMessage.chat.sender_id){
-					//console.log('chatMessage', chatMessage);
-					this.$store.dispatch('newIncomingChat', chatMessage).then(res=>{
-						let element = document.getElementById('chat')
-						element.scrollIntoView(false)
-					})
+					if(chatMessage.chat.receiver.id){
+						//console.log('chatMessage', chatMessage);
+						this.$store.dispatch('newIncomingChat', chatMessage).then(res=>{
+							let element = document.getElementById('chat')
+							element.scrollIntoView(false)
+						})
+					}
 				}
 			}
 
