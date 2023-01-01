@@ -36,10 +36,19 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const Dashboard = Vue.component('chat-page', require('./components/pages/Dashboard.vue').default);
 
 const ChatPage = Vue.component('chat-page', require('./components/pages/ChatPage.vue').default);
-
+const PrivateMessage = Vue.component('private-message', require('./components/private-message/PrivateMessageInbox.vue').default);
+const PrivateMessageCompose = Vue.component('message-compose', require('./components/private-message/PrivateMessageCompose.vue').default);
+const PrivateMessageSent = Vue.component('message-sent', require('./components/private-message/PrivateMessageSent.vue').default);
+const ViewPrivateMessage = Vue.component('message-view', require('./components/private-message/ViewPrivateMessage.vue').default);
 const routes =[
-    {path:'/',component:Dashboard, name:'Dashboard'},
-    {path:'/page/chat',component:ChatPage, name:'ChatPage'},
+    {path:'/', component:Dashboard, name:'Dashboard'},
+    {path:'/page/chat', component:ChatPage, name:'ChatPage'},
+    {path:'/private-message/inbox', component:PrivateMessage, name:'PrivateMessage'},
+    {path:'/private-message/compose', component:PrivateMessageCompose, name:'PrivateMessageCompose'},
+    {path:'/private-message/sent', component:PrivateMessageSent, name:'PrivateMessageSent'},
+    {path:'/private-message/view/:id', component:ViewPrivateMessage, name:'ViewPrivateMessage'},
+
+
     ];
 const router = new VueRouter({
     routes:routes,

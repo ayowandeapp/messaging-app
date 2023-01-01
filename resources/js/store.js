@@ -4,9 +4,14 @@ import Vuex from 'vuex';
 
 import axios from 'axios';
 
+import privateMessageStore from './components/private-message/privateMessageStore'
+
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
+	modules:{
+		privateMessageStore,
+	},
 	state: {
 		userList: [],
 		currentChatUser: '',

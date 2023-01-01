@@ -7,13 +7,13 @@ use App\PrivateMessage;
 
 class PrivateMessageController extends Controller
 {
-    public function getUserNotifications($value='')
+    public function getUserNotifications()
     {
         $notifications = PrivateMessage::where(['receiver_id'=> auth()->user()->id, 'read'=>0])->orderBy('created_at','desc')->get();
         return response()->json(["data"=>$notification]);
     }
 
-    public function getPrivateMessages($value='')
+    public function getPrivateMessages()
     {
         $data = PrivateMessage::where('receiver_id',auth()->user()->id)->orderBy('created_at','desc')->get();
         return response()->json(["data"=>$data]);
@@ -43,9 +43,10 @@ class PrivateMessageController extends Controller
 
     }
 
-    public function getPrivateMessageSent($value='')
+    public function getPrivateMessageSent()
     {
         $data = PrivateMessage::where('sender_id',auth()->user()->id)->orderBy('created_at','desc')->get();
+        //$data = PrivateMessage::select('receiver_id','created_at')->where('sender_id',auth()->user()->id)->orderBy('created_at','desc')->distinct()->get();
         return response()->json(["data"=>$data]);
     }
 }
