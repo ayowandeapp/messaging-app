@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use App\PrivateMessage;
+use App\Events\SendMessage;
 
 class PrivateMessageController extends Controller
 {
@@ -39,6 +41,14 @@ class PrivateMessageController extends Controller
             'read' => 0];
         $data = PrivateMessage::create($data);
         $getmessage = PrivateMessage::find($data->id);
+
+        // $redis = Redis::connection(); //create a redis instance
+        // $redis->publish('message',$getmessage);
+
+        //event(new SendMessage($getmessage));
+        broadcast(new SendMessage($getmessage))->toOthers();
+
+
         return response()->json(["data"=>$getmessage]);
 
     }

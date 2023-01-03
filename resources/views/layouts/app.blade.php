@@ -79,5 +79,11 @@
             </main>
         </div>
     </div>
+    @if(auth()->check())
+        <script>
+            var authuser = @JSON(auth()->user());
+            //alert(authuser.id);       
+        </script> 
+    @endif
 </body>
 </html>

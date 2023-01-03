@@ -44,6 +44,7 @@
 <script>
 
 	import {mapState} from 'vuex';
+	import Echo from 'laravel-echo';
 	export default {
 
 		computed:{
@@ -55,6 +56,14 @@
 			})
 		},
 		created(){
+			//alert(authuser.id);
+			window.Echo.channel('message.'+authuser.id)
+		    .listen('SendMessage', (e) => {
+		        //console.log(e.message);
+		        console.log('ok');
+		        this.$store.dispatch('newMessageNotification', e.message);
+
+		    });
 			this.$store.dispatch('getUserMessageRec');
 		},
 		methods:{

@@ -41,7 +41,11 @@ export default {
 		},
 		sendMessage(state,message){
 			state.sendMessage = message;
+		},
+		newMessage(state,message){
+			state.messagesRec.unshift(message);
 		}
+
 
 	},
 	actions:{
@@ -67,7 +71,7 @@ export default {
 		},
 		getUsers({commit}){
 			axios.get('/get-users').then(response=>{
-				console.log(response.data);
+				//console.log(response.data);
 				commit('getUsers',response.data.data);
 				commit('auth',response.data.authUser);
 			})
@@ -75,10 +79,13 @@ export default {
 		},
 		sendPrivateMessage({commit}, data){
 			axios.post('/send-private-message',data).then(response=>{
-				console.log(response.data.data);
+				//console.log(response.data.data);
 				commit('sendMessage',response.data.data);
 			})
 
+		},
+		newMessageNotification({commit}, data){
+			commit('newMessage', data);
 		}
 
 

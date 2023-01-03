@@ -2136,12 +2136,14 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
@@ -2152,6 +2154,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     }
   })),
   created: function created() {
+    var _this = this;
+    //alert(authuser.id);
+    window.Echo.channel('message.' + authuser.id).listen('SendMessage', function (e) {
+      //console.log(e.message);
+      console.log('ok');
+      _this.$store.dispatch('newMessageNotification', e.message);
+    });
     this.$store.dispatch('getUserMessageRec');
   },
   methods: {}
@@ -62351,7 +62360,11 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "051efabfe6e28ffcffaf",
   cluster: "mt1",
-  encrypted: true
+  encrypted: true,
+  wsHost: window.location.hostname,
+  wsPort: 6001,
+  forceTLS: false,
+  disableStats: true
 });
 
 /***/ }),
@@ -62705,15 +62718,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************************************************!*\
   !*** ./resources/js/components/private-message/PrivateMessageInbox.vue ***!
   \*************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PrivateMessageInbox_vue_vue_type_template_id_0ec50f16___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PrivateMessageInbox.vue?vue&type=template&id=0ec50f16& */ "./resources/js/components/private-message/PrivateMessageInbox.vue?vue&type=template&id=0ec50f16&");
 /* harmony import */ var _PrivateMessageInbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PrivateMessageInbox.vue?vue&type=script&lang=js& */ "./resources/js/components/private-message/PrivateMessageInbox.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _PrivateMessageInbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _PrivateMessageInbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _PrivateMessageInbox_vue_vue_type_style_index_0_id_0ec50f16_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PrivateMessageInbox.vue?vue&type=style&index=0&id=0ec50f16&lang=css& */ "./resources/js/components/private-message/PrivateMessageInbox.vue?vue&type=style&index=0&id=0ec50f16&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _PrivateMessageInbox_vue_vue_type_style_index_0_id_0ec50f16_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PrivateMessageInbox.vue?vue&type=style&index=0&id=0ec50f16&lang=css& */ "./resources/js/components/private-message/PrivateMessageInbox.vue?vue&type=style&index=0&id=0ec50f16&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -62745,7 +62757,7 @@ component.options.__file = "resources/js/components/private-message/PrivateMessa
 /*!**************************************************************************************************!*\
   !*** ./resources/js/components/private-message/PrivateMessageInbox.vue?vue&type=script&lang=js& ***!
   \**************************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62981,6 +62993,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     sendMessage: function sendMessage(state, message) {
       state.sendMessage = message;
+    },
+    newMessage: function newMessage(state, message) {
+      state.messagesRec.unshift(message);
     }
   },
   actions: {
@@ -63011,7 +63026,7 @@ __webpack_require__.r(__webpack_exports__);
     getUsers: function getUsers(_ref5) {
       var commit = _ref5.commit;
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/get-users').then(function (response) {
-        console.log(response.data);
+        //console.log(response.data);
         commit('getUsers', response.data.data);
         commit('auth', response.data.authUser);
       });
@@ -63019,9 +63034,13 @@ __webpack_require__.r(__webpack_exports__);
     sendPrivateMessage: function sendPrivateMessage(_ref6, data) {
       var commit = _ref6.commit;
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/send-private-message', data).then(function (response) {
-        console.log(response.data.data);
+        //console.log(response.data.data);
         commit('sendMessage', response.data.data);
       });
+    },
+    newMessageNotification: function newMessageNotification(_ref7, data) {
+      var commit = _ref7.commit;
+      commit('newMessage', data);
     }
   }
 });
@@ -63043,7 +63062,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_private_message_privateMessageStore__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/private-message/privateMessageStore */ "./resources/js/components/private-message/privateMessageStore.js");
+/* harmony import */ var _components_private_message_privateMessageStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/private-message/privateMessageStore */ "./resources/js/components/private-message/privateMessageStore.js");
 
 
 
@@ -63051,7 +63070,7 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
-    privateMessageStore: _components_private_message_privateMessageStore__WEBPACK_IMPORTED_MODULE_4__["default"]
+    privateMessageStore: _components_private_message_privateMessageStore__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   state: {
     userList: [],
